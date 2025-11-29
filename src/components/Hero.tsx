@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { FlowingBackground } from "./FlowingBackground";
-import { HeroTimeline } from "./HeroTimeline";
+import { HeroNetwork } from "./HeroNetwork";
 
 const slides = [
   {
@@ -131,8 +131,8 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Timeline Progress Indicator */}
-      <HeroTimeline currentSlide={currentSlide} totalSlides={slides.length} />
+      {/* Network Progress Indicator */}
+      <HeroNetwork currentSlide={currentSlide} />
 
       {/* Scroll Indicator */}
       <motion.div
