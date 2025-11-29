@@ -22,10 +22,10 @@ const connections: Array<[string, string]> = [
 
 export function HeroNetwork({ currentSlide }: HeroNetworkProps) {
   return (
-    <div className="absolute inset-x-0 bottom-10 px-6 z-20">
-      <div className="relative max-w-5xl mx-auto h-64 md:h-80 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md overflow-hidden shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(199,168,106,0.08),transparent_36%),radial-gradient(circle_at_80%_20%,rgba(34,211,238,0.1),transparent_38%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:38px_38px] opacity-30" />
+    <div className="absolute inset-x-0 bottom-10 md:bottom-12 px-6 z-20">
+      <div className="relative max-w-6xl w-full mx-auto h-72 md:h-[26rem] rounded-[28px] border border-white/15 bg-[#060a14]/80 backdrop-blur-2xl overflow-hidden shadow-[0_30px_120px_rgba(0,0,0,0.55)] ring-1 ring-white/5">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_18%,rgba(199,168,106,0.12),transparent_36%),radial-gradient(circle_at_82%_22%,rgba(34,211,238,0.16),transparent_40%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:36px_36px] opacity-40" />
 
         <svg
           className="absolute inset-0 w-full h-full"
@@ -34,10 +34,17 @@ export function HeroNetwork({ currentSlide }: HeroNetworkProps) {
         >
           <defs>
             <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#C7A86A" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="#22d3ee" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#C7A86A" stopOpacity="0.8" />
+              <stop offset="0%" stopColor="#C7A86A" stopOpacity="0.95" />
+              <stop offset="50%" stopColor="#2dd4bf" stopOpacity="0.95" />
+              <stop offset="100%" stopColor="#C7A86A" stopOpacity="0.95" />
             </linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="1.2" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
 
           {connections.map(([from, to], index) => {
@@ -52,11 +59,12 @@ export function HeroNetwork({ currentSlide }: HeroNetworkProps) {
                 x2={end.x}
                 y2={end.y}
                 stroke="url(#lineGradient)"
-                strokeWidth="0.8"
+                strokeWidth="1.1"
                 strokeLinecap="round"
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 0.8 }}
-                transition={{ delay: index * 0.08, duration: 0.8 }}
+                animate={{ opacity: 0.95 }}
+                transition={{ delay: index * 0.08, duration: 1.2, ease: "easeInOut" }}
+                style={{ filter: "url(#glow)" }}
               />
             );
           })}
@@ -64,12 +72,12 @@ export function HeroNetwork({ currentSlide }: HeroNetworkProps) {
           <motion.circle
             cx={nodes[currentSlide].x}
             cy={nodes[currentSlide].y}
-            r={5}
+            r={6.5}
             fill="transparent"
             stroke="#C7A86A"
-            strokeWidth="0.35"
-            animate={{ scale: [1, 1.12, 1], opacity: [0.45, 0.25, 0.45] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            strokeWidth="0.45"
+            animate={{ scale: [1, 1.12, 1], opacity: [0.55, 0.3, 0.55] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           />
         </svg>
 
@@ -85,36 +93,38 @@ export function HeroNetwork({ currentSlide }: HeroNetworkProps) {
               style={{ left: `${node.x}%`, top: `${node.y}%`, transform: "translate(-50%, -50%)" }}
             >
               <motion.div
-                className="relative px-4 py-3 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm shadow-lg"
+                className="relative px-4 py-3 md:px-5 md:py-4 rounded-2xl border border-white/15 bg-white/10 backdrop-blur-lg shadow-[0_10px_40px_rgba(0,0,0,0.45)]"
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + index * 0.05, duration: 0.6 }}
+                transition={{ delay: 0.2 + index * 0.05, duration: 0.7, ease: "easeOut" }}
               >
                 <motion.div
-                  className={`flex items-center gap-2 text-sm tracking-wide ${
-                    isActive ? "text-white" : "text-white/70"
+                  className={`flex items-center gap-3 text-sm md:text-base tracking-wide ${
+                    isActive ? "text-white" : "text-white/80"
                   }`}
                   animate={{
-                    opacity: isActive ? 1 : isPast ? 0.9 : 0.6,
-                    scale: isActive ? 1.02 : 1,
+                    opacity: isActive ? 1 : isPast ? 0.9 : 0.7,
+                    scale: isActive ? 1.04 : 1,
                   }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.35, ease: "easeInOut" }}
                 >
                   <span
-                    className={`flex items-center justify-center w-8 h-8 rounded-full border ${
+                    className={`flex items-center justify-center w-10 h-10 rounded-full border shadow-inner ${
                       isActive
-                        ? "border-[#C7A86A]/60 bg-[#C7A86A]/10 text-[#C7A86A]"
-                        : "border-white/20 bg-white/5 text-white/60"
+                        ? "border-[#C7A86A]/60 bg-[#C7A86A]/15 text-[#C7A86A] shadow-[0_0_20px_rgba(199,168,106,0.45)]"
+                        : "border-white/25 bg-black/40 text-white/70"
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-5 h-5" />
                   </span>
-                  <span className="font-semibold whitespace-nowrap">{node.label}</span>
+                  <span className="font-semibold whitespace-nowrap drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]">
+                    {node.label}
+                  </span>
                 </motion.div>
 
                 {isActive && (
                   <motion.div
-                    className="absolute -inset-2 rounded-2xl bg-gradient-to-r from-[#C7A86A]/20 via-cyan-400/15 to-[#C7A86A]/20 blur-xl"
+                    className="absolute -inset-3 rounded-2xl bg-gradient-to-r from-[#C7A86A]/20 via-cyan-400/20 to-[#C7A86A]/20 blur-2xl"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.6 }}
