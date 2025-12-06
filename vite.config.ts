@@ -4,7 +4,7 @@
   import path from 'path';
 
   export default defineConfig({
-    base: '/btd_web/', 
+    base: '/', 
     plugins: [react()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],

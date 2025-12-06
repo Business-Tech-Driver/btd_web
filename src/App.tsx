@@ -29,6 +29,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState("/");
 
   useEffect(() => {
+    document.title = "Business Tech Driver";
     // Simple router based on hash
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1) || "/";
